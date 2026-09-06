@@ -66,11 +66,6 @@ std::string prompt(const std::string& message) {
     return input;
 }
 
-template<typename... Types>
-std::tuple<Types...> parse_input(std::istringstream& stream) {
-    return std::tuple<Types...>{parse_next<Types>(stream)...};
-}
-
 template<typename T>
 T parse_next(std::istringstream& stream) {
     T value;
@@ -79,6 +74,11 @@ T parse_next(std::istringstream& stream) {
         throw std::runtime_error("Invalid input");
     }
     return value;
+}
+
+template<typename... Types>
+std::tuple<Types...> parse_input(std::istringstream& stream) {
+    return std::tuple<Types...>{parse_next<Types>(stream)...};
 }
 
 class CommandVisitor {
