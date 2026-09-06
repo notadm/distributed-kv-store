@@ -628,7 +628,19 @@ namespace client {
 
     //This function adds a node to the cluster by sending a MEET instruction to a random node
     Status Client::add_node_to_cluster(const std::string& name, const std::string& ip, uint16_t client_port, uint16_t cluster_port) {
-        observer_ptr<net::Connection> link = get_random_connection();
+        // Prefer a connection other than the node being added, so the receiving node
+        // already has an up-to-date cluster state and can detect duplicates.
+        std::string new_node_ip_port = get_ip_port(ip, client_port);
+        observer_ptr<net::Connection> link = nullptr;
+        for (auto& [key, conn] : nodes_connections_) {
+            if (key != new_node_ip_port) {
+                link = &conn;
+                break;
+            }
+        }
+        if (link == nullptr) {
+            link = get_random_connection();
+        }
         if (link == nullptr) {
             return Status::new_error("Not connected to any node");
         }
