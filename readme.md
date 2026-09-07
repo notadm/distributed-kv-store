@@ -14,25 +14,13 @@ This project is a basic distributed key value store that works in a similar way 
 
 ### Building from source
 
-1. Clone the repository:
-
-    `$git clone https://github.com/JulianJesacher/Distributed-Key-Value-Store.git`
-
-2. Change into the project directory:
-
-    `$cd Distributed-Key-Value-Store`
-
-3. Create a build direktory:
-
-    `$mkdir build && cd build`
-
-4. Configure the project using CMake:
-
-    `$cmake ..`
-
-5. Build the project:
-
-    `$make`
+```bash
+git clone https://github.com/JulianJesacher/Distributed-Key-Value-Store.git
+cd Distributed-Key-Value-Store
+mkdir build && cd build
+cmake ..
+make
+```
 
 Now you find all test in the directory `tests` and the executables for the client-cli and the server nodes in the directory `src`.
 
